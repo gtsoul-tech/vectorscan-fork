@@ -61,7 +61,9 @@ private:
     template <class, class> friend class iter_wrapper;
 
 public:
+    
     template <class OtherIter, class OtherValue>
+    // cppcheck-suppress noExplicitConstructor
     iter_wrapper(iter_wrapper<OtherIter, OtherValue> other,
                  typename std::enable_if<std::is_convertible<
                      OtherIter, WrappedIter>::value>::type * = nullptr)

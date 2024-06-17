@@ -215,9 +215,9 @@ public:
     }
 
     flat_set(const flat_set &) = default;
-    flat_set(flat_set &&) = default;
+    flat_set(flat_set &&) noexcept = default;
     flat_set &operator=(const flat_set &) = default;
-    flat_set &operator=(flat_set &&) = default;
+    flat_set &operator=(flat_set &&) noexcept = default;
 
     // Iterators.
 
@@ -445,9 +445,9 @@ public:
     }
 
     flat_map(const flat_map &) = default;
-    flat_map(flat_map &&) = default;
+    flat_map(flat_map &&) noexcept = default;
     flat_map &operator=(const flat_map &) = default;
-    flat_map &operator=(flat_map &&) = default;
+    flat_map &operator=(flat_map &&) noexcept = default;
 
     // Iterators.
 

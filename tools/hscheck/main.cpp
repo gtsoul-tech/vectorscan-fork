@@ -198,15 +198,15 @@ void printExpressionId(const ExpressionMap &exprMap) {
         if (!build_sigs) {
             if (fail) {
                 cout << "FAIL (compile): " << id << ":" << regex << ": "
-                     << result.first << endl;
+                     << result.first << "\n";
             } else {
-                cout << result.first << ' ' << id << ":" << regex << endl;
+                cout << result.first << ' ' << id << ":" << regex << "\n";
             }
         } else {
             if (fail) {
-                cout << "# " << id << " # " << result.first << endl;
+                cout << "# " << id << " # " << result.first << "\n";
             } else {
-                cout << id << endl;
+                cout << id << "\n";
             }
         }
 
@@ -308,7 +308,7 @@ void checkExpression(UNUSED void *threadarg) {
                 ch_free_compile_error(ch_compile_err);
             }
 #else
-            cerr << "Hybrid mode not available in this build." << endl;
+            cerr << "Hybrid mode not available in this build." << "\n";
             exit(1);
 #endif // HS_HYBRID
         } else {
@@ -467,27 +467,27 @@ void checkLogicalExpression(UNUSED void *threadarg) {
 
 static
 void usage() {
-    cout << "Usage: hscheck [OPTIONS...]"  << endl << endl
-         << "  -e PATH         Path to expression directory." << endl
-         << "  -s FILE         Signature file to use." << endl
-         << "  -z NUM          Signature ID to use." << endl
-         << "  -E DISTANCE     Force edit distance to DISTANCE for all patterns." << endl
+    cout << "Usage: hscheck [OPTIONS...]"  << "\n" << "\n"
+         << "  -e PATH         Path to expression directory." << "\n"
+         << "  -s FILE         Signature file to use." << "\n"
+         << "  -z NUM          Signature ID to use." << "\n"
+         << "  -E DISTANCE     Force edit distance to DISTANCE for all patterns." << "\n"
 #ifndef RELEASE_BUILD
-         << "  -G OVERRIDES    Overrides for the grey." << endl
+         << "  -G OVERRIDES    Overrides for the grey." << "\n"
 #endif
-         << "  -V              Operate in vectored mode." << endl
-         << "  -N              Operate in block mode (default: streaming)." << endl
+         << "  -V              Operate in vectored mode." << "\n"
+         << "  -N              Operate in block mode (default: streaming)." << "\n"
 #ifdef HS_HYBRID
-         << "  -H              Operate in hybrid mode." << endl
+         << "  -H              Operate in hybrid mode." << "\n"
 #endif
-         << "  -L              Pass HS_FLAG_SOM_LEFTMOST for all expressions (default: off)." << endl
-         << "  -8              Force UTF8 mode on all patterns." << endl
-         << "  -T NUM          Run with NUM threads." << endl
-         << "  -h              Display this help." << endl
-         << "  -B              Build signature set." << endl
-         << "  -C              Check logical combinations (default: off)." << endl
-         << "  --literal-on    Processing pure literals, no need to check." << endl
-         << endl;
+         << "  -L              Pass HS_FLAG_SOM_LEFTMOST for all expressions (default: off)." << "\n"
+         << "  -8              Force UTF8 mode on all patterns." << "\n"
+         << "  -T NUM          Run with NUM threads." << "\n"
+         << "  -h              Display this help." << "\n"
+         << "  -B              Build signature set." << "\n"
+         << "  -C              Check logical combinations (default: off)." << "\n"
+         << "  --literal-on    Processing pure literals, no need to check." << "\n"
+         << "\n";
 }
 
 static
@@ -599,7 +599,7 @@ void failLine(unsigned lineNum, const string &file,
               const string &line, const string &error) {
     cerr << "Parse error in file " << file
         << " on line " << lineNum << ": " << error
-        << endl << "Line is: '" << line << "'" << endl;
+        << "\n" << "Line is: '" << line << "'" << "\n";
     exit(1);
 }
 
@@ -612,7 +612,7 @@ void loadSignatureBuildSigs(const string &inFile,
                        SignatureSet &signatures) {
     ifstream f(inFile.c_str());
     if (!f.good()) {
-        cerr << "Can't open file: '" << inFile << "'" << endl;
+        cerr << "Can't open file: '" << inFile << "'" << "\n";
         exit(1);
     }
 
@@ -643,7 +643,7 @@ void loadSignatureBuildSigs(const string &inFile,
                 signatures.push_back(id);
             } else {
                 // couldn't be turned into an ID, dump to stdout
-                cout << line << endl;
+                cout << line << "\n";
             }
         } else { // lines that don't begin with #
             if (fromString(line, id)) {
@@ -665,7 +665,7 @@ int HS_CDECL main(int argc, char **argv) {
     processArgs(argc, argv, g_grey);
 
     if (num_of_threads == 0) {
-        cout << "Error: Must have at least one thread." << endl;
+        cout << "Error: Must have at least one thread." << "\n";
         exit(1);
     }
 
@@ -687,7 +687,7 @@ int HS_CDECL main(int argc, char **argv) {
     }
 
     if (g_exprMap.empty()) {
-        cout << "Warning: no signatures to scan. Exiting." << endl;
+        cout << "Warning: no signatures to scan. Exiting." << "\n";
         exit(0);
     }
 
@@ -717,7 +717,7 @@ int HS_CDECL main(int argc, char **argv) {
 
     if (!g_exprMap.empty() && !build_sigs) {
         cout << "SUMMARY: " << countFailures << " of "
-             << g_exprMap.size() << " failed." << endl;
+             << g_exprMap.size() << " failed." << "\n";
     }
     return 0;
 }

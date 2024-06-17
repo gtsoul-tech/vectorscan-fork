@@ -131,7 +131,7 @@ public:
         data().clear();
     }
 
-    void swap(flat_base &a) {
+    void swap(flat_base &a) noexcept {
         using std::swap;
         swap(comp(), a.comp());
         swap(data(), a.data());
@@ -353,7 +353,7 @@ public:
     }
 
     // Free swap function for ADL.
-    friend void swap(flat_set &a, flat_set &b) {
+    friend void swap(flat_set &a, flat_set &b) noexcept {
         a.swap(b);
     }
 };
@@ -637,7 +637,7 @@ public:
     }
 
     // Free swap function for ADL.
-    friend void swap(flat_map &a, flat_map &b) {
+    friend void swap(flat_map &a, flat_map &b) noexcept {
         a.swap(b);
     }
 };

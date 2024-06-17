@@ -1071,7 +1071,7 @@ void buildAcceptsList(const build_info &args, ReportListCache &reports_cache,
             a.reports = addReports(h[v].reports, reports, reports_cache);
         }
         a.squash = addSquashMask(args, v, squash);
-        accepts.emplace_back(std::move(a));
+        accepts.emplace_back(a);
     }
 }
 

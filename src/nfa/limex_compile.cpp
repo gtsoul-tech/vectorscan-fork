@@ -628,7 +628,7 @@ void fillAccelInfo(build_info &bi) {
     vector<NFAVertex> astates;
     for (const auto &m : accel_map) {
         // cppcheck-suppress useStlAlgorithm
-        astates.emplace_back(m.first);
+        astates.emplace_back(m.first);  //NOLINT (performance-inefficient-vector-operation)
     }
 
     NFAStateSet useful(num_states);

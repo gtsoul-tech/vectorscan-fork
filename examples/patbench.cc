@@ -301,7 +301,7 @@ public:
         // database.
         hs_error_t err = hs_alloc_scratch(db, &scratch);
         if (err != HS_SUCCESS) {
-            cerr << "ERROR: could not allocate scratch space. Exiting." << "\n";
+            cerr << "ERROR: could not allocate scratch space. Exiting." << endl;
             exit(-1);
         }
     }
@@ -314,7 +314,7 @@ public:
         hs_error_t err = hs_scratch_size(scratch, &scratch_size);
         if (err != HS_SUCCESS) {
             cerr << "ERROR: could not query scratch space size. Exiting."
-                 << "\n";
+                 << endl;
             exit(-1);
         }
         return scratch_size;
@@ -327,7 +327,7 @@ public:
         pcap_t *pcapHandle = pcap_open_offline(pcapFile, errbuf);
         if (pcapHandle == nullptr) {
             cerr << "ERROR: Unable to open pcap file \"" << pcapFile
-                 << "\": " << errbuf << "\n";
+                 << "\": " << errbuf << endl;
             return false;
         }
 
@@ -379,7 +379,7 @@ public:
         for (auto &stream : streams) {
             hs_error_t err = hs_open_stream(db, 0, &stream);
             if (err != HS_SUCCESS) {
-                cerr << "ERROR: Unable to open stream. Exiting." << "\n";
+                cerr << "ERROR: Unable to open stream. Exiting." << endl;
                 exit(-1);
             }
         }
@@ -392,7 +392,7 @@ public:
             hs_error_t err =
                 hs_close_stream(stream, scratch, onMatch, &matchCount);
             if (err != HS_SUCCESS) {
-                cerr << "ERROR: Unable to close stream. Exiting." << "\n";
+                cerr << "ERROR: Unable to close stream. Exiting." << endl;
                 exit(-1);
             }
         }
@@ -407,7 +407,7 @@ public:
                                             pkt.c_str(), pkt.length(), 0,
                                             scratch, onMatch, &matchCount);
             if (err != HS_SUCCESS) {
-                cerr << "ERROR: Unable to scan packet. Exiting." << "\n";
+                cerr << "ERROR: Unable to scan packet. Exiting." << endl;
                 exit(-1);
             }
         }
@@ -421,7 +421,7 @@ public:
             hs_error_t err = hs_scan(db, pkt.c_str(), pkt.length(), 0,
                                      scratch, onMatch, &matchCount);
             if (err != HS_SUCCESS) {
-                cerr << "ERROR: Unable to scan packet. Exiting." << "\n";
+                cerr << "ERROR: Unable to scan packet. Exiting." << endl;
                 exit(-1);
             }
         }
@@ -471,12 +471,12 @@ public:
         if (err != HS_SUCCESS) {
             if (compileErr->expression < 0) {
                 // The error does not refer to a particular expression.
-                cerr << "ERROR: " << compileErr->message << "\n";
+                cerr << "ERROR: " << compileErr->message << endl;
             } else {
                 cerr << "ERROR: Pattern '"
                      << patterns[compileErr->expression]
                      << "' failed with error '" << compileErr->message << "'"
-                     << "\n";
+                     << endl;
             }
             // As the compileErr pointer points to dynamically allocated memory,
             // if we get an error, we must be sure to release it. This is not
@@ -509,29 +509,29 @@ public:
 
 static
 void usage(const char *) {
-    cerr << "Usage:" << "\n" << "\n";
-    cerr << "  patbench [-n repeats] [ -G generations] [ -C criterion ]" << "\n"
+    cerr << "Usage:" << endl << endl;
+    cerr << "  patbench [-n repeats] [ -G generations] [ -C criterion ]" << endl
          << "           [ -F factor_group_size ] [ -N | -S ] "
-         << "<pattern file> <pcap file>" << "\n" << "\n"
+         << "<pattern file> <pcap file>" << endl << endl
          << "    -n repeats sets the number of times the PCAP is repeatedly "
-            "scanned" << "\n" << "       with the pattern." << "\n"
+            "scanned" << endl << "       with the pattern." << endl
          << "    -G generations sets the number of generations that the "
-            "algorithm is" << "\n" << "       run for." << "\n"
+            "algorithm is" << endl << "       run for." << endl
          << "    -N sets non-streaming mode, -S sets streaming mode (default)."
-         << "\n" << "    -F sets the factor group size (must be >0); this "
-                    "allows the detection" << "\n"
-         << "       of multiple interacting factors." << "\n" << "" << "\n"
-         << "    -C sets the 'criterion', which can be either:" << "\n"
+         << endl << "    -F sets the factor group size (must be >0); this "
+                    "allows the detection" << endl
+         << "       of multiple interacting factors." << endl << "" << endl
+         << "    -C sets the 'criterion', which can be either:" << endl
          << "         t  throughput (the default) - this requires a pcap file"
-         << "\n" << "         r  scratch size" << "\n"
-         << "         s  stream state size" << "\n"
-         << "         c  compile time" << "\n" << "         b  bytecode size"
-         << "\n" << "\n"
+         << endl << "         r  scratch size" << endl
+         << "         s  stream state size" << endl
+         << "         c  compile time" << endl << "         b  bytecode size"
+         << endl << endl
          << "We recommend the use of a utility like 'taskset' on "
-            "multiprocessor hosts to" << "\n"
+            "multiprocessor hosts to" << endl
          << "lock execution to a single processor: this will remove processor "
-            "migration" << "\n"
-         << "by the scheduler as a source of noise in the results." << "\n";
+            "migration" << endl
+         << "by the scheduler as a source of noise in the results." << endl;
 }
 
 static
@@ -574,7 +574,7 @@ double eval_set(Benchmark &bench, const Sigdata &sigs, unsigned int mode,
         size_t dbSize;
         hs_error_t err = hs_database_size(bench.getDatabase(), &dbSize);
         if (err != HS_SUCCESS) {
-            cerr << "ERROR: could not retrieve bytecode size" << "\n";
+            cerr << "ERROR: could not retrieve bytecode size" << endl;
             exit(1);
         }
         return dbSize;
@@ -585,7 +585,7 @@ double eval_set(Benchmark &bench, const Sigdata &sigs, unsigned int mode,
         size_t streamStateSize;
         hs_error_t err = hs_stream_size(bench.getDatabase(), &streamStateSize);
         if (err != HS_SUCCESS) {
-            cerr << "ERROR: could not retrieve stream state size" << "\n";
+            cerr << "ERROR: could not retrieve stream state size" << endl;
             exit(1);
         }
         return streamStateSize;
@@ -611,7 +611,7 @@ double eval_set(Benchmark &bench, const Sigdata &sigs, unsigned int mode,
              << " sec, Scanned " << bytes * repeatCount << " bytes, Throughput "
              << std::fixed << std::setprecision(3)
              << (bytes * 8 * repeatCount) / (scan_time * 1000000)
-             << " Mbps, Matches " << matches << "\n";
+             << " Mbps, Matches " << matches << endl;
         cout.flags(f);
     }
     return (bytes * 8 * repeatCount) / (scan_time * 1000000);
@@ -658,7 +658,7 @@ int main(int argc, char **argv) {
                 criterion = CRITERION_SCRATCH_SIZE;
                 break;
             default:
-                cerr << "Unrecognised criterion: " << optarg[0] << "\n";
+                cerr << "Unrecognised criterion: " << optarg[0] << endl;
                 usage(argv[0]);
                 exit(-1);
             }
@@ -684,14 +684,14 @@ int main(int argc, char **argv) {
     Benchmark bench;
     if (criterion == CRITERION_THROUGHPUT) {
         if (!bench.readStreams(pcapFile)) {
-            cerr << "Unable to read packets from PCAP file. Exiting." << "\n";
+            cerr << "Unable to read packets from PCAP file. Exiting." << endl;
             exit(-1);
         }
     }
 
     if ((criterion == CRITERION_STREAM_STATE) && (mode != HS_MODE_STREAM)) {
         cerr << "Cannot evaluate stream state for block mode compile. Exiting."
-             << "\n";
+             << endl;
         exit(-1);
     }
 
@@ -705,7 +705,7 @@ int main(int argc, char **argv) {
     } else {
         cout << "\tMode: block";
     }
-    cout << "\n";
+    cout << endl;
 
     Sigdata sigs(patternFile);
 
@@ -721,15 +721,15 @@ int main(int argc, char **argv) {
     double score_base =
         eval_set(bench, sigs, mode, repeatCount, criterion, false);
     bool maximize = higher_is_better(criterion);
-    cout << "Number of signatures: " << sigs.size() << "\n";
+    cout << "Number of signatures: " << sigs.size() << endl;
     cout << "Base performance: ";
     print_criterion(criterion, score_base);
-    cout << "\n";
+    cout << endl;
 
     unsigned generations = min(gen_max, (sigs.size() - 1) / factor_max);
 
     cout << "Cutting signatures cumulatively for " << generations
-         << " generations" << "\n";
+         << " generations" << endl;
     for (unsigned gen = 0; gen < generations; ++gen) {
         cout << "Generation " << gen << " ";
         set<unsigned> s(work_sigs.begin(), work_sigs.end());
@@ -773,17 +773,17 @@ int main(int argc, char **argv) {
         cout << "Performance: ";
         print_criterion(criterion, best);
         cout << " (" << std::fixed << std::setprecision(3) << (best / score_base)
-             << "x) after cutting:" << "\n";
+             << "x) after cutting:" << endl;
         cout.flags(out_f);
 
         // s now has factor_max signatures
         for (const auto &found : s) {
             exclude.insert(found);
             work_sigs.erase(found);
-            cout << sigs.get_original(found) << "\n";
+            cout << sigs.get_original(found) << endl;
         }
 
-        cout << "\n";
+        cout << endl;
     }
     return 0;
 }
@@ -852,7 +852,7 @@ static unsigned parseFlags(const string &flagsStr) {
         case '\r': // stray carriage-return
             break;
         default:
-            cerr << "Unsupported flag \'" << c << "\'" << "\n";
+            cerr << "Unsupported flag \'" << c << "\'" << endl;
             exit(-1);
         }
     }
@@ -864,7 +864,7 @@ static void parseFile(const char *filename, vector<string> &patterns,
                       vector<string> &originals) {
     ifstream inFile(filename);
     if (!inFile.good()) {
-        cerr << "ERROR: Can't open pattern file \"" << filename << "\"" << "\n";
+        cerr << "ERROR: Can't open pattern file \"" << filename << "\"" << endl;
         exit(-1);
     }
 
@@ -882,7 +882,7 @@ static void parseFile(const char *filename, vector<string> &patterns,
 
         size_t colonIdx = line.find_first_of(':');
         if (colonIdx == string::npos) {
-            cerr << "ERROR: Could not parse line " << i << "\n";
+            cerr << "ERROR: Could not parse line " << i << endl;
             exit(-1);
         }
 
@@ -894,7 +894,7 @@ static void parseFile(const char *filename, vector<string> &patterns,
 
         size_t flagsStart = expr.find_last_of('/');
         if (flagsStart == string::npos) {
-            cerr << "ERROR: no trailing '/' char" << "\n";
+            cerr << "ERROR: no trailing '/' char" << endl;
             exit(-1);
         }
 

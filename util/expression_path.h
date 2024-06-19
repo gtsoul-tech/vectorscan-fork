@@ -67,7 +67,7 @@ bool isDir(const std::string &filename) {
     struct stat s;
 
     if (stat(filename.c_str(), &s) == -1) {
-        std::cerr << "stat: " << strerror(errno) << "\n";
+        std::cerr << "stat: " << strerror(errno) << std::endl;
         return false;
     }
 
@@ -79,7 +79,7 @@ bool isFile(const std::string &filename) {
     struct stat s;
 
     if (stat(filename.c_str(), &s) == -1) {
-        std::cerr << "stat: " << strerror(errno) << "\n";
+        std::cerr << "stat: " << strerror(errno) << std::endl;
         return false;
     }
 

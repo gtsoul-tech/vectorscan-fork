@@ -296,7 +296,7 @@ vector<BadPatternParam> getBadPatterns() {
     vector<BadPatternParam> rv;
     if (!f.good()) {
         string expr("couldn't find input file:" + filename);
-        cerr << expr << "\n";
+        cerr << expr << endl;
         abort();
         return rv;
     }
@@ -324,7 +324,7 @@ vector<BadPatternParam> getBadPatterns() {
         string regex;
         hs_expr_ext ext;
         if (!readExpression(expr, regex, &flags, &ext)) {
-            cerr << expr << " failed in readExpression" << "\n";
+            cerr << expr << " failed in readExpression" << endl;
             abort();
         }
         rv.push_back(BadPatternParam(regex, flags, ext, error));

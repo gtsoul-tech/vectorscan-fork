@@ -196,14 +196,14 @@ public:
         // mode, so we only need the one scratch region.
         hs_error_t err = hs_alloc_scratch(db_streaming, &scratch);
         if (err != HS_SUCCESS) {
-            cerr << "ERROR: could not allocate scratch space. Exiting." << "\n";
+            cerr << "ERROR: could not allocate scratch space. Exiting." << endl;
             exit(-1);
         }
         // This second call will increase the scratch size if more is required
         // for block mode.
         err = hs_alloc_scratch(db_block, &scratch);
         if (err != HS_SUCCESS) {
-            cerr << "ERROR: could not allocate scratch space. Exiting." << "\n";
+            cerr << "ERROR: could not allocate scratch space. Exiting." << endl;
             exit(-1);
         }
     }
@@ -220,7 +220,7 @@ public:
         pcap_t *pcapHandle = pcap_open_offline(pcapFile, errbuf);
         if (pcapHandle == nullptr) {
             cerr << "ERROR: Unable to open pcap file \"" << pcapFile
-                << "\": " << errbuf << "\n";
+                << "\": " << errbuf << endl;
             return false;
         }
 
@@ -271,7 +271,7 @@ public:
         for (auto &stream : streams) {
             hs_error_t err = hs_open_stream(db_streaming, 0, &stream);
             if (err != HS_SUCCESS) {
-                cerr << "ERROR: Unable to open stream. Exiting." << "\n";
+                cerr << "ERROR: Unable to open stream. Exiting." << endl;
                 exit(-1);
             }
         }
@@ -284,7 +284,7 @@ public:
             hs_error_t err = hs_close_stream(stream, scratch, onMatch,
                                              &matchCount);
             if (err != HS_SUCCESS) {
-                cerr << "ERROR: Unable to close stream. Exiting." << "\n";
+                cerr << "ERROR: Unable to close stream. Exiting." << endl;
                 exit(-1);
             }
         }
@@ -299,7 +299,7 @@ public:
                                             pkt.c_str(), pkt.length(), 0,
                                             scratch, onMatch, &matchCount);
             if (err != HS_SUCCESS) {
-                cerr << "ERROR: Unable to scan packet. Exiting." << "\n";
+                cerr << "ERROR: Unable to scan packet. Exiting." << endl;
                 exit(-1);
             }
         }
@@ -313,7 +313,7 @@ public:
             hs_error_t err = hs_scan(db_block, pkt.c_str(), pkt.length(), 0,
                                      scratch, onMatch, &matchCount);
             if (err != HS_SUCCESS) {
-                cerr << "ERROR: Unable to scan packet. Exiting." << "\n";
+                cerr << "ERROR: Unable to scan packet. Exiting." << endl;
                 exit(-1);
             }
         }
@@ -327,40 +327,40 @@ public:
         hs_error_t err;
 
         cout << numPackets << " packets in " << numStreams
-             << " streams, totalling " << numBytes << " bytes." << "\n";
+             << " streams, totalling " << numBytes << " bytes." << endl;
         cout << "Average packet length: " << numBytes / numPackets << " bytes."
-             << "\n";
+             << endl;
         cout << "Average stream length: " << numBytes / numStreams << " bytes."
-             << "\n";
-        cout << "\n";
+             << endl;
+        cout << endl;
 
         size_t dbStream_size = 0;
         err = hs_database_size(db_streaming, &dbStream_size);
         if (err == HS_SUCCESS) {
             cout << "Streaming mode Hyperscan database size    : "
-                 << dbStream_size << " bytes." << "\n";
+                 << dbStream_size << " bytes." << endl;
         } else {
             cout << "Error getting streaming mode Hyperscan database size"
-                 << "\n";
+                 << endl;
         }
 
         size_t dbBlock_size = 0;
         err = hs_database_size(db_block, &dbBlock_size);
         if (err == HS_SUCCESS) {
             cout << "Block mode Hyperscan database size        : "
-                 << dbBlock_size << " bytes." << "\n";
+                 << dbBlock_size << " bytes." << endl;
         } else {
             cout << "Error getting block mode Hyperscan database size"
-                 << "\n";
+                 << endl;
         }
 
         size_t stream_size = 0;
         err = hs_stream_size(db_streaming, &stream_size);
         if (err == HS_SUCCESS) {
             cout << "Streaming mode Hyperscan stream state size: "
-                 << stream_size << " bytes (per stream)." << "\n";
+                 << stream_size << " bytes (per stream)." << endl;
         } else {
-            cout << "Error getting stream state size" << "\n";
+            cout << "Error getting stream state size" << endl;
         }
     }
 };
@@ -388,11 +388,11 @@ static hs_database_t *buildDatabase(const vector<const char *> &expressions,
     if (err != HS_SUCCESS) {
         if (compileErr->expression < 0) {
             // The error does not refer to a particular expression.
-            cerr << "ERROR: " << compileErr->message << "\n";
+            cerr << "ERROR: " << compileErr->message << endl;
         } else {
             cerr << "ERROR: Pattern '" << expressions[compileErr->expression]
                  << "' failed compilation with error: " << compileErr->message
-                 << "\n";
+                 << endl;
         }
         // As the compileErr pointer points to dynamically allocated memory, if
         // we get an error, we must be sure to release it. This is not
@@ -403,7 +403,7 @@ static hs_database_t *buildDatabase(const vector<const char *> &expressions,
 
     cout << "Hyperscan " << (mode == HS_MODE_STREAM ? "streaming" : "block")
          << " mode database compiled in " << clock.seconds() << " seconds."
-         << "\n";
+         << endl;
 
     return db;
 }
@@ -437,14 +437,14 @@ static void databasesFromFile(const char *filename,
     }
 
     cout << "Compiling Hyperscan databases with " << patterns.size()
-         << " patterns." << "\n";
+         << " patterns." << endl;
 
     *db_streaming = buildDatabase(cstrPatterns, flags, ids, HS_MODE_STREAM);
     *db_block = buildDatabase(cstrPatterns, flags, ids, HS_MODE_BLOCK);
 }
 
 static void usage(const char *prog) {
-    cerr << "Usage: " << prog << " [-n repeats] <pattern file> <pcap file>" << "\n";
+    cerr << "Usage: " << prog << " [-n repeats] <pattern file> <pcap file>" << endl;
 }
 
 // Main entry point.
@@ -473,20 +473,20 @@ int main(int argc, char **argv) {
     const char *pcapFile = argv[optind + 1];
 
     // Read our pattern set in and build Hyperscan databases from it.
-    cout << "Pattern file: " << patternFile << "\n";
+    cout << "Pattern file: " << patternFile << endl;
     hs_database_t *db_streaming, *db_block;
     databasesFromFile(patternFile, &db_streaming, &db_block);
 
     // Read our input PCAP file in
     Benchmark bench(db_streaming, db_block);
-    cout << "PCAP input file: " << pcapFile << "\n";
+    cout << "PCAP input file: " << pcapFile << endl;
     if (!bench.readStreams(pcapFile)) {
-        cerr << "Unable to read packets from PCAP file. Exiting." << "\n";
+        cerr << "Unable to read packets from PCAP file. Exiting." << endl;
         exit(-1);
     }
 
     if (repeatCount != 1) {
-        cout << "Repeating PCAP scan " << repeatCount << " times." << "\n";
+        cout << "Repeating PCAP scan " << repeatCount << " times." << endl;
     }
 
     bench.displayStats();
@@ -536,28 +536,28 @@ int main(int argc, char **argv) {
     size_t matchesBlock = bench.matches();
     double matchRateBlock = matchesBlock / ((bytes * repeatCount) / 1024.0); // matches per kilobyte
 
-    cout << "\n" << "Streaming mode:" << "\n" << "\n";
-    cout << "  Total matches: " << matchesStream << "\n";
+    cout << endl << "Streaming mode:" << endl << endl;
+    cout << "  Total matches: " << matchesStream << endl;
     cout << std::fixed << std::setprecision(4);
-    cout << "  Match rate:    " << matchRateStream << " matches/kilobyte" << "\n";
+    cout << "  Match rate:    " << matchRateStream << " matches/kilobyte" << endl;
     cout << std::fixed << std::setprecision(2);
     cout << "  Throughput (with stream overhead): "
-              << tputStreamOverhead/1000000 << " megabits/sec" << "\n";
+              << tputStreamOverhead/1000000 << " megabits/sec" << endl;
     cout << "  Throughput (no stream overhead):   "
-              << tputStreamScanning/1000000 << " megabits/sec" << "\n";
+              << tputStreamScanning/1000000 << " megabits/sec" << endl;
 
-    cout << "\n" << "Block mode:" << "\n" << "\n";
-    cout << "  Total matches: " << matchesBlock << "\n";
+    cout << endl << "Block mode:" << endl << endl;
+    cout << "  Total matches: " << matchesBlock << endl;
     cout << std::fixed << std::setprecision(4);
-    cout << "  Match rate:    " << matchRateBlock << " matches/kilobyte" << "\n";
+    cout << "  Match rate:    " << matchRateBlock << " matches/kilobyte" << endl;
     cout << std::fixed << std::setprecision(2);
     cout << "  Throughput:    "
-              << tputBlockScanning/1000000 << " megabits/sec" << "\n";
+              << tputBlockScanning/1000000 << " megabits/sec" << endl;
 
-    cout << "\n";
+    cout << endl;
     if (bytes < (2*1024*1024)) {
-        cout << "\n" << "WARNING: Input PCAP file is less than 2MB in size." << "\n"
-                  << "This test may have been too short to calculate accurate results." << "\n";
+        cout << endl << "WARNING: Input PCAP file is less than 2MB in size." << endl
+                  << "This test may have been too short to calculate accurate results." << endl;
     }
 
     // Close Hyperscan databases
@@ -631,7 +631,7 @@ static unsigned parseFlags(const string &flagsStr) {
         case '\r': // stray carriage-return
             break;
         default:
-            cerr << "Unsupported flag \'" << c << "\'" << "\n";
+            cerr << "Unsupported flag \'" << c << "\'" << endl;
             exit(-1);
         }
     }
@@ -642,7 +642,7 @@ static void parseFile(const char *filename, vector<string> &patterns,
                       vector<unsigned> &flags, vector<unsigned> &ids) {
     ifstream inFile(filename);
     if (!inFile.good()) {
-        cerr << "ERROR: Can't open pattern file \"" << filename << "\"" << "\n";
+        cerr << "ERROR: Can't open pattern file \"" << filename << "\"" << endl;
         exit(-1);
     }
 
@@ -660,7 +660,7 @@ static void parseFile(const char *filename, vector<string> &patterns,
 
         size_t colonIdx = line.find_first_of(':');
         if (colonIdx == string::npos) {
-            cerr << "ERROR: Could not parse line " << i << "\n";
+            cerr << "ERROR: Could not parse line " << i << endl;
             exit(-1);
         }
 
@@ -672,7 +672,7 @@ static void parseFile(const char *filename, vector<string> &patterns,
 
         size_t flagsStart = expr.find_last_of('/');
         if (flagsStart == string::npos) {
-            cerr << "ERROR: no trailing '/' char" << "\n";
+            cerr << "ERROR: no trailing '/' char" << endl;
             exit(-1);
         }
 

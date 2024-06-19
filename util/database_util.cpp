@@ -50,7 +50,7 @@ bool saveDatabase(const hs_database_t *db, const char *filename, bool verbose) {
     assert(filename);
 
     if (verbose) {
-        cout << "Saving database to: " << filename << "\n";
+        cout << "Saving database to: " << filename << endl;
     }
 
     char *bytes = nullptr;
@@ -76,7 +76,7 @@ hs_database_t * loadDatabase(const char *filename, bool verbose) {
     assert(filename);
 
     if (verbose) {
-        cout << "Loading database from: " << filename << "\n";
+        cout << "Loading database from: " << filename << endl;
     }
 
     char *bytes = nullptr;
@@ -96,7 +96,7 @@ hs_database_t * loadDatabase(const char *filename, bool verbose) {
 
     bytes = reinterpret_cast<char *>(mmap(nullptr, len, PROT_READ, MAP_SHARED, fd, 0));
     if (bytes == MAP_FAILED) {
-        cout << "mmap failed" << "\n";
+        cout << "mmap failed" << endl;
         close(fd);
         return nullptr;
     }
@@ -110,7 +110,7 @@ hs_database_t * loadDatabase(const char *filename, bool verbose) {
     is.seekg(0, ios::end);
     size_t len = is.tellg();
     if (verbose) {
-        cout << "Reading " << len << " bytes" << "\n";
+        cout << "Reading " << len << " bytes" << endl;
     }
     is.seekg(0, ios::beg);
     bytes = new char[len];
@@ -125,12 +125,12 @@ hs_database_t * loadDatabase(const char *filename, bool verbose) {
         hs_error_t err = hs_serialized_database_info(bytes, len, &info);
         if (err) {
             cout << "Unable to decode serialized database info: " << err
-                 << "\n";
+                 << endl;
         } else if (info) {
-            cout << "Serialized database info: " << info << "\n";
+            cout << "Serialized database info: " << info << endl;
             std::free(info);
         } else {
-            cout << "Unable to decode serialized database info." << "\n";
+            cout << "Unable to decode serialized database info." << endl;
         }
     }
 
@@ -145,7 +145,7 @@ hs_database_t * loadDatabase(const char *filename, bool verbose) {
 #endif
 
     if (err != HS_SUCCESS) {
-        cout << "hs_deserialize_database call failed: " << err << "\n";
+        cout << "hs_deserialize_database call failed: " << err << endl;
         return nullptr;
     }
 

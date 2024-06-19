@@ -53,7 +53,7 @@ void failLine(unsigned lineNum, const string &file,
               const string &line, const string &error) {
     cerr << "Parse error in file " << file
         << " on line " << lineNum << ": " << error
-        << "\n" << "Line is: '" << line << "'" << "\n";
+        << endl << "Line is: '" << line << "'" << endl;
     exit(1);
 }
 
@@ -85,7 +85,7 @@ void processLine(string &line, unsigned lineNum,
     // rest of the expression is the PCRE
     const string pcre_str(line.substr(colonIdx + 1));
 
-    //cout << "Inserting expr: id=" << id << ", pcre=" << pcre_str << "\n";
+    //cout << "Inserting expr: id=" << id << ", pcre=" << pcre_str << endl;
 
     bool ins = exprMap.emplace(id, pcre_str).second;
     if (!ins) {
@@ -137,7 +137,7 @@ void loadExpressions(const string &inPath, ExpressionMap &exprMap) {
     // Is our input path a file or a directory?
     struct stat st;
     if (stat(inPath.c_str(), &st) != 0) {
-        cerr << "Can't stat path: '" << inPath << "'" << "\n";
+        cerr << "Can't stat path: '" << inPath << "'" << endl;
         exit(1);
     }
     if (S_ISREG(st.st_mode)) {
@@ -145,13 +145,13 @@ void loadExpressions(const string &inPath, ExpressionMap &exprMap) {
         try {
             loadExpressionsFromFile(inPath, exprMap);
         } catch (runtime_error &e) {
-            cerr << e.what() << ": '" << inPath << "'" << "\n";
+            cerr << e.what() << ": '" << inPath << "'" << endl;
             exit(1);
         }
     } else if (S_ISDIR(st.st_mode)) {
         DIR *d = opendir(inPath.c_str());
         if (d == nullptr) {
-            cerr << "Can't open directory: '" << inPath << "'" << "\n";
+            cerr << "Can't open directory: '" << inPath << "'" << endl;
             exit(1);
         }
         for (struct dirent *ent = readdir(d); ent; ent = readdir(d)) {
@@ -167,14 +167,14 @@ void loadExpressions(const string &inPath, ExpressionMap &exprMap) {
 
             // Skip emacs backup files, dotfiles (such as VIM swap).
             if (isIgnorable(basename)) {
-                cerr << "Ignoring signature file " << fname << "\n";
+                cerr << "Ignoring signature file " << fname << endl;
                 continue;
             }
 
             try {
                 loadExpressionsFromFile(fname, exprMap);
             } catch (runtime_error &e) {
-                cerr << e.what() << ": '" << fname << "'" << "\n";
+                cerr << e.what() << ": '" << fname << "'" << endl;
                 exit(1);
             }
         }
@@ -182,7 +182,7 @@ void loadExpressions(const string &inPath, ExpressionMap &exprMap) {
     } else {
         cerr << "Unsupported file type "
 	    << hex << showbase << (st.st_mode & S_IFMT)
-	    << " for path: '" << inPath << "'" << "\n";
+	    << " for path: '" << inPath << "'" << endl;
         exit(1);
     }
 }
@@ -191,7 +191,7 @@ void HS_CDECL loadSignatureList(const string &inFile,
                                 SignatureSet &signatures) {
     ifstream f(inFile.c_str());
     if (!f.good()) {
-        cerr << "Can't open file: '" << inFile << "'" << "\n";
+        cerr << "Can't open file: '" << inFile << "'" << endl;
         exit(1);
     }
 
@@ -223,7 +223,7 @@ ExpressionMap limitToSignatures(const ExpressionMap &exprMap,
         auto match = exprMap.find(id);
         if (match == exprMap.end()) {
             cerr << "Unable to find signature " << id
-                    << " in expression set!" << "\n";
+                    << " in expression set!" << endl;
             exit(1);
         }
         keepers.insert(*match);

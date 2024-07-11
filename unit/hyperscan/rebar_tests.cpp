@@ -61,7 +61,7 @@ TEST(rebar, leipzig_math_symbols_count) {
     ASSERT_TRUE(scratch != nullptr);
 
 
-    std::ifstream file("../unit/hyperscan/datafiles/leipzig-3200.txt");
+    std::ifstream file("../source/unit/hyperscan/datafiles/leipzig-3200.txt");
     std::stringstream buffer;
     buffer << file.rdbuf(); // Read the file into the buffer
     std::string data = buffer.str(); // Convert the buffer into a std::string
@@ -95,7 +95,7 @@ TEST(rebar, lh3lh3_reb_uri_or_email_grep) {
     ASSERT_TRUE(scratch != nullptr);
 
 
-    std::ifstream file("../unit/hyperscan/datafiles/lh3lh3-reb-howto.txt");
+    std::ifstream file("../source/unit/hyperscan/datafiles/lh3lh3-reb-howto.txt");
     std::stringstream buffer;
     buffer << file.rdbuf(); // Read the file into the buffer
     std::string data = buffer.str(); // Convert the buffer into a std::string
@@ -129,7 +129,7 @@ TEST(rebar, lh3lh3_reb_email_grep) {
     ASSERT_TRUE(scratch != nullptr);
 
 
-    std::ifstream file("../unit/hyperscan/datafiles/lh3lh3-reb-howto.txt");
+    std::ifstream file("../source/unit/hyperscan/datafiles/lh3lh3-reb-howto.txt");
     std::stringstream buffer;
     buffer << file.rdbuf(); // Read the file into the buffer
     std::string data = buffer.str(); // Convert the buffer into a std::string
@@ -164,7 +164,7 @@ TEST(rebar, lh3lh3_reb_date_grep) {
     ASSERT_TRUE(scratch != nullptr);
 
 
-    std::ifstream file("../unit/hyperscan/datafiles/lh3lh3-reb-howto.txt");
+    std::ifstream file("../source/unit/hyperscan/datafiles/lh3lh3-reb-howto.txt");
     std::stringstream buffer;
     buffer << file.rdbuf(); // Read the file into the buffer
     std::string data = buffer.str(); // Convert the buffer into a std::string

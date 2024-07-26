@@ -55,7 +55,6 @@ TEST(rebar, leipzig_math_symbols_count) {
     CallBackContext c;
     const char *expr = "\\p{Sm}";
     const unsigned flag = HS_FLAG_UCP | HS_FLAG_UTF8;
-    const unsigned id= 1;
     hs_error_t err = hs_compile(expr, flag, HS_MODE_BLOCK,nullptr, &db, &compile_err);
 
     ASSERT_EQ(HS_SUCCESS, err);
@@ -130,7 +129,6 @@ TEST(rebar, lh3lh3_reb_uri_or_email_grep) {
     CallBackContext c;
     const char *expr = "([a-zA-Z][a-zA-Z0-9]*)://([^ /]+)(/[^ ]*)?|([^ @]+)@([^ @]+)";
     const unsigned flag = 0;
-    const unsigned id = 1;
     hs_error_t err = hs_compile(expr, flag, HS_MODE_BLOCK, nullptr, &db, &compile_err);
 
     ASSERT_EQ(HS_SUCCESS, err);
@@ -167,7 +165,6 @@ TEST(rebar, lh3lh3_reb_email_grep) {
     CallBackContext c;
     const char *expr = "([^ @]+)@([^ @]+)";
     const unsigned flag = 0;
-    const unsigned id = 1;
     hs_error_t err = hs_compile(expr, flag, HS_MODE_BLOCK, nullptr, &db, &compile_err);
 
     ASSERT_EQ(HS_SUCCESS, err);
@@ -205,7 +202,6 @@ TEST(rebar, lh3lh3_reb_date_grep) {
     CallBackContext c;
     const char *expr = "([0-9][0-9]?)/([0-9][0-9]?)/([0-9][0-9]([0-9][0-9])?)";
     const unsigned flag = 0;
-    const unsigned id= 1;
     hs_error_t err = hs_compile(expr, flag, HS_MODE_BLOCK,nullptr, &db, &compile_err);
 
     ASSERT_EQ(HS_SUCCESS, err);

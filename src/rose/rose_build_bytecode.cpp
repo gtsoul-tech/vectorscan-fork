@@ -3299,7 +3299,7 @@ void addEodAnchorProgram(const RoseBuildImpl &build, const build_context &bc,
 }
 
 static
-void addEodEventProgram(const RoseBuildImpl &build, build_context &bc,
+void addEodEventProgram(const RoseBuildImpl &build,const build_context &bc,
                         ProgramBuild &prog_build, RoseProgram &program) {
     if (build.eod_event_literal_id == MO_INVALID_IDX) {
         return;

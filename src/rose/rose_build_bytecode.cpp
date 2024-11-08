@@ -3336,7 +3336,7 @@ void addEodEventProgram(const RoseBuildImpl &build,const build_context &bc,
 }
 
 static
-RoseProgram makeEodProgram(const RoseBuildImpl &build, build_context &bc,
+RoseProgram makeEodProgram(const RoseBuildImpl &build,const build_context &bc,
                            ProgramBuild &prog_build, u32 eodNfaIterOffset) {
     RoseProgram program;
 

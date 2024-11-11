@@ -922,11 +922,13 @@ void buildAccel(const build_info &args, NFAStateSet &accelMask,
 
     // Start with the NONE case.
     auxvec.emplace_back(AccelAux());
+    // cppcheck-suppress memsetClassFloat
     memset(&auxvec[0], 0, sizeof(AccelAux));
     auxvec[0].accel_type = ACCEL_NONE; // no states on.
 
     AccelAux aux;
     for (u32 i = 1; i < accelCount; i++) {
+        // cppcheck-suppress memsetClassFloat
         memset(&aux, 0, sizeof(aux));
 
         NFAStateSet effective_states(args.num_states);

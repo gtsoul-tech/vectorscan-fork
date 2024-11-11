@@ -2018,8 +2018,7 @@ void buildCountingMiracles(build_context &bc) {
             continue;
         }
 
-        RoseCountingMiracle rcm;
-        memset(&rcm, 0, sizeof(rcm));
+        RoseCountingMiracle rcm = {}; // Initialize rcm to zero
 
         if (cr.count() == 1) {
             rcm.c = cr.find_first();

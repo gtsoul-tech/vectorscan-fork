@@ -3,7 +3,7 @@ knownConditionTrueFalse:*Parser.rl
 knownConditionTrueFalse:*Parser.cpp
 variableScope:*Parser.rl
 unreadVariable:*control_verbs.cpp
-*:simde/*
+*:*simde/*
 assertWithSideEffect
 syntaxError
 internalError
